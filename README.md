@@ -1,5 +1,7 @@
-Spring Boot/ Spring-Cloud-Netflix-Eureka-Server 
-==============================================
+# Micre Service Architecture
+
+Spring-Cloud-Netflix-Eureka-Server 
+===============================================
 
 > **Note:**
 > - Spring Cloud는 분산시스템(ex. MSA)을 구축할 때 공통적으로 발생하는 대표적인 문제에 대한 솔루션을 제공한다. 
@@ -11,8 +13,11 @@ Spring Boot/ Spring-Cloud-Netflix-Eureka-Server
 
 Eureka는 Netflix의 서비스 검색 Server및 Client이다.각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, Eureka Server는 각 EurekaClient에게 업데이된 정보를전달해주는 체계를 가진다. 이는 다수의 서비스가 지속적으로가능하게 하며, 각 Eureka Client는 Eureka Server로 부터 받은정보를 일정 시간동안 보유하고 있어 다른 서비스의 연결에 문제가 되지 않는다.
 
+## Spring Cloud Eureka Server ##
 
-<-Cent OS 7.4 Spring boot Cloud Netflix Eureka Server->
+> **Development Environment**
+> - Cent OS 7.4
+> - Jdk 1.8 
 
 1. Spring-Cloud-Eureka-Server
 
