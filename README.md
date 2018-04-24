@@ -7,19 +7,11 @@ Spring Boot/ Spring-Cloud-Netflix-Eureka-Server
 > - 결론적으로 MSA구축에 필요한 라이브러리 집합인 Netflix OSS를 Spring-Cloud 프로젝트에서 사용할 수 있다. 
 > - 여기서는 Netflix OSS Component중 MSA구축에 필수적인 Eureka, Hystrix, Zuul, Ribbon 중 Eureka에 대해 알아보고 Eureka Server를 구성하여 본다.    
 
-Netflix Eureka 
---------------
->Eureka - **Service Discovery**
+## Netflix Eureka - Service Discovery ##
 
->Eureka는 Netflix의 서비스 검색 Server및 Client이다.
-각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, 
-Eureka Server는 각 Eureka Client에게 업데이된 정보를
-전달해주는 체계를 가진다. 이는 다수의 서비스가 지속적으로
-가능하게 하며, 각 Eureka Client는 Eureka Server로 부터 받은
-정보를 일정 시간동안 보유하고 있어 다른 서비스의 연결에 문제가
-되지 않는다.
+Eureka는 Netflix의 서비스 검색 Server및 Client이다.각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, Eureka Server는 각 EurekaClient에게 업데이된 정보를전달해주는 체계를 가진다. 이는 다수의 서비스가 지속적으로가능하게 하며, 각 Eureka Client는 Eureka Server로 부터 받은정보를 일정 시간동안 보유하고 있어 다른 서비스의 연결에 문제가 되지 않는다.
 
->
+
 <-Cent OS 7.4 Spring boot Cloud Netflix Eureka Server->
 
 1. Spring-Cloud-Eureka-Server
