@@ -1,6 +1,6 @@
 Spring Boot/ Spring-Cloud-Netflix-Eureka-Server 
 
-<Cent OS 7.4 Spring boot Cloud Netflix Eureka Server>
+<-Cent OS 7.4 Spring boot Cloud Netflix Eureka Server->
 
 1. Spring-Cloud-Eureka-Server
 
@@ -13,6 +13,7 @@ Spring Boot/ Spring-Cloud-Netflix-Eureka-Server
        -  vi pom.xl (원하는 Editor 사용)
 
 --> pom.xml에 추가
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -84,10 +85,9 @@ Spring Boot/ Spring-Cloud-Netflix-Eureka-Server
     </repositories>
 
 
+-->
     d. maven wrapper 설정
-
        - $mvn -N io.takari:maven:wrapper -Dmaven=3.3.3
-
 
     e. src/main/java/hello에 EurekaServerApplication.java 파일 생성
 
