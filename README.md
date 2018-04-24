@@ -1,7 +1,7 @@
 
 Spring-Cloud-Netflix-Eureka-Server 
 ===============================================
-
+by SangMin Lee
 
 > **Note:**
 > - Spring Cloud는 분산시스템(ex. MSA)을 구축할 때 공통적으로 발생하는 대표적인 문제에 대한 솔루션을 제공한다. 
