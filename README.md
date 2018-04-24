@@ -168,14 +168,13 @@ Spring-Cloud-Netflix-Eureka-Server
 >
 > - **Tip**
 > - Spring Boot에서는 SnakeYAML을 포함하고 있기에 쉽게 외부파일은 YAML로 작성하여 쉽게 로드 가능.
->
->
+
+
    >* $vi src/main/resources/application.yml
->
->
 
 
-**6. application.yml**
+
+**application.yml**
 
          spring:
              application:
@@ -192,7 +191,7 @@ Spring-Cloud-Netflix-Eureka-Server
 
 
 
-**7. Maven Package**
+**6. Maven Package**
 
 >
 >a. maven wrapper build
@@ -203,7 +202,7 @@ Spring-Cloud-Netflix-Eureka-Server
 >
 
 
-**8. excute jar**
+**7. excute jar**
 
 >
 >a. jar 파일 실행
