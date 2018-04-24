@@ -27,19 +27,24 @@ Spring-Cloud-Netflix-Eureka-Server
 > - Maven wrapper-Dmaven=3.3.3
 
 
+
+
 **1. Set Maven Project Folder**
 
-a. Project Folder 생성 
+>a. Project Folder 생성 
 
 
-b. Project Folder 하위에 Maven Project를 생성
-   *  $mkdir -p src/main/java/hello
+>b. Project Folder 하위에 Maven Project를 생성
+   >*  $mkdir -p src/main/java/hello
+
+
 
 
 **2. Pom.xml**
 
-a. pom.xml 생성
-   *  $vi pom.xl (원하는 Editor 사용)
+>a. pom.xml 생성
+
+   >*  $vi pom.xl (원하는 Editor 사용)
 
 
  **pom.xml**
@@ -115,17 +120,21 @@ a. pom.xml 생성
     </repositories>
 
 
+
+
+
 **3. Maven Wrapper**
 
-a. maven wrapper 설정
+>a. maven wrapper 설정
 
-   * $mvn -N io.takari:maven:wrapper -Dmaven=3.3.3
+   >* $mvn -N io.takari:maven:wrapper -Dmaven=3.3.3
+      
       
       
       
 **4. EurekaServerApplication.java**
 
-a. src/main/java/hello에 EurekaServerApplication.java 파일 생성
+>a. src/main/java/hello에 EurekaServerApplication.java 파일 생성
 
        
         EurekaServerApplication.java
@@ -140,19 +149,26 @@ a. src/main/java/hello에 EurekaServerApplication.java 파일 생성
         
 
 
+
+
+
+
+
 **5. Application.yml**
 
-a. application.yml 파일 생성
+>a. application.yml 파일 생성
 
 
 > - **Tip**
 > - Spring Boot에서는 SnakeYAML을 포함하고 있기에 쉽게 외부파일은 YAML로 작성하여 쉽게 로드 가능.
 
 
-   * $vi src/main/resources/application.yml
+   >* $vi src/main/resources/application.yml
 
 
-**application.yml**
+
+
+**6. application.yml**
 
          spring:
              application:
@@ -167,19 +183,23 @@ a. application.yml 파일 생성
 
 
 
-**6. Maven Package**
 
-a. maven wrapper build
+
+**7. Maven Package**
+
+>a. maven wrapper build
   
-   * $cd {YourProjectFolder}
-   * $./mvnw package
+   >* $cd {YourProjectFolder}
+   >* $./mvnw package
 
 
-**7. excute jar**
 
-a. jar 파일 실행
 
-   * $java -jar target/spring-boot-docker-sm1-0.1.0.jar
+**8. excute jar**
+
+>a. jar 파일 실행
+
+   >* $java -jar target/spring-boot-docker-sm1-0.1.0.jar
 
 
 
