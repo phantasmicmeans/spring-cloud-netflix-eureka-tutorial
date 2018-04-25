@@ -157,10 +157,6 @@ by SangMin Lee
 
 
 
-
-
-
-
 **5. Application.yml**
 
 >a. application.yml 파일 생성
@@ -189,8 +185,6 @@ by SangMin Lee
 
 
 
-
-
 **6. Maven Package**
 
 >
@@ -211,5 +205,19 @@ by SangMin Lee
 >
 >
 
-    
+**8. Make Docker images**
+>
+   >* $./mvnw dockerfile:build
+   >* $docker images 로 확인
+>
+>
+
+**9. Run Docker Container**
+>
+   >* $docker run -it 8761:8761 {your_container_id}
+   >* $docker ps 로 확인 
+>
+>
+
+**10. Check your Eureka Dashboard**
 
