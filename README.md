@@ -221,6 +221,8 @@ by SangMin Lee
 
 **10. Check your Eureka Dashboard**
 
+> {your_ip_address}:8761
+
 ![eureka](https://user-images.githubusercontent.com/20153890/39235281-755c1428-48b0-11e8-807a-c33bb67f7fd1.PNG)
 
 
