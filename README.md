@@ -35,7 +35,7 @@ by SangMin Lee
 >
 >
 >b. Project Folder 하위에 Maven Project를 생성
-   >*  $mkdir -p src/main/java/hello
+> -     $mkdir -p src/main/java/hello
 >
 >
 >
@@ -45,7 +45,7 @@ by SangMin Lee
 
 >a. pom.xml 생성
 >
-   >*  $vi pom.xl (원하는 Editor 사용)
+> -     $vi pom.xl (원하는 Editor 사용)
 >
 >
 >
@@ -132,7 +132,7 @@ by SangMin Lee
 >
 >a. maven wrapper 설정
 >
-   >* $mvn -N io.takari:maven:wrapper -Dmaven=3.3.3
+> -     $mvn -N io.takari:maven:wrapper -Dmaven=3.3.3
 >  
 >
 >
@@ -166,7 +166,7 @@ by SangMin Lee
 > - Spring Boot에서는 SnakeYAML을 포함하고 있기에 쉽게 외부파일은 YAML로 작성하여 쉽게 로드 가능.
 
 
-   >* $vi src/main/resources/application.yml
+> -     $vi src/main/resources/application.yml
 
 
 
@@ -190,8 +190,8 @@ by SangMin Lee
 >
 >a. maven wrapper build
 >
-   >* $cd {YourProjectFolder}
-   >* $./mvnw package
+> -     $cd {YourProjectFolder}
+> -     $./mvnw package
 >
 >
 
@@ -201,21 +201,21 @@ by SangMin Lee
 >
 >a. jar 파일 실행
 >
-   >* $java -jar target/spring-boot-docker-sm1-0.1.0.jar
+> -     $java -jar target/spring-boot-docker-sm1-0.1.0.jar
 >
 >
 
 **8. Make Docker images**
 >
-   >* $./mvnw dockerfile:build
-   >* $docker images 로 확인
+> -     $./mvnw dockerfile:build
+> -     $docker images 로 확인
 >
 >
 
 **9. Run Docker Container**
 >
-   >* $docker run -it 8761:8761 {your_container_id}
-   >* $docker ps 로 확인 
+> -     $docker run -it 8761:8761 {your_container_id}
+> -     $docker ps 로 확인 
 >
 >
 
