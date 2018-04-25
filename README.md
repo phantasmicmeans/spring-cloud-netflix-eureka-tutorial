@@ -14,7 +14,7 @@ by SangMin Lee
 
 ## Netflix Eureka - Service Discovery ##
 
- * Eureka는 Netflix의 서비스 검색 Server및 Client이다. 각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, Eureka Server는 각 EurekaClient에게 업데이된 정보를전달해주는 체계를 가진다. 
+ * Eureka는 Netflix의 서비스 검색 Server및 Client이다. 각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, Eureka Server는 각 Eureka Client에게 업데이된 정보를 전달해주는 체계를 가진다. 
  이는 다수의 서비스가 지속적으로가능하게 하며, 각 Eureka Client는 Eureka Server로 부터 받은정보를 일정 시간동안 보유하고 있어 다른 서비스의 연결에 문제가 되지 않는다.
 
 
@@ -46,9 +46,6 @@ by SangMin Lee
 >a. pom.xml 생성
 >
 > -     $vi pom.xl (원하는 Editor 사용)
->
->
->
 >
 
  **pom.xml**
@@ -163,7 +160,7 @@ by SangMin Lee
 >
 >
 > - **Tip**
-> - Spring Boot에서는 SnakeYAML을 포함하고 있기에 쉽게 외부파일은 YAML로 작성하여 쉽게 로드 가능.
+> - Spring Boot에서는 SnakeYAML을 포함하고 있기에 외부파일은 YAML로 작성하여 쉽게 로드 가능
 
 
 > -     $vi src/main/resources/application.yml
@@ -196,7 +193,7 @@ by SangMin Lee
 >
 
 
-**7. excute jar**
+**7. Execute jar**
 
 >
 >a. jar 파일 실행
@@ -208,20 +205,20 @@ by SangMin Lee
 **8. Make Docker images**
 >
 > -     $./mvnw dockerfile:build
-> -     $docker images 로 확인
+> -     $docker images
 >
 >
 
 **9. Run Docker Container**
 >
 > -     $docker run -it 8761:8761 {your_container_id}
-> -     $docker ps 로 확인 
+> -     $docker ps 
 >
 >
 
 **10. Check your Eureka Dashboard**
 
-> {your_ip_address}:8761
+> http://localhost:8761
 
 ![eureka](https://user-images.githubusercontent.com/20153890/39235281-755c1428-48b0-11e8-807a-c33bb67f7fd1.PNG)
 
