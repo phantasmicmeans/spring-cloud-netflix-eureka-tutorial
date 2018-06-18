@@ -46,45 +46,58 @@ Spring-Cloud-Netflix-Eureka
  
  이는 다수의 서비스가 지속적으로가능하게 하며, 각 Eureka Client는 Eureka Server로 부터 받은정보를 일정 시간동안 보유하고 있어 다른 서비스의 연결에 문제가 되지 않는다.
  
- 여기서는 Eureka란 무엇인지, 어떻게 구성되어있는지, 그리고 Eureka의 개념에 대해 간단하게 설명했지만, Eureka의 활용도는 무궁무진하며 Service Discovery & Registry란 개념은 다음 장에서 설명하게 될 Netflix의 다른 component인 Hystrix, Ribbon, Zuul과 결합되어 질 때 활용도가 매우 높아진다. 그러나 이 부분을 지금 다루기엔 무리가 있으므로 차차 설명 하겠다.
+ 여기서는 Eureka란 무엇인지, 어떻게 구성되어있는지, 그리고 Eureka의 개념에 대해 간단하게 설명했지만, Eureka의 활용도는 무궁무진하며 Service Discovery & Registry란 개념은 다음 장에서 설명하게 될 Netflix의 다른 component인 Hystrix, Ribbon, Zuul과 결합되어 질 때 활용도가 매우 높아진다.
+ 
+그러나 이 부분을 지금 다루기엔 무리가 있으므로 차차 설명 하겠다..
  
 이제 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들고, 이를 Eureka Server에 등록해 볼 것이다.
 
+![image](https://user-images.githubusercontent.com/20153890/41519407-db9950f8-7302-11e8-80bf-1835466c374f.png)
 
-* Spring boot로 구축된 Microservice(API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial2
-* Node.JS로 구축된 Microservice(API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial2
+각 Service는 위 사진 처럼 Story Service, Notice Service, BBS(Bulletin Board System) Service로 이루어 질 것이고, 
+Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축한다.
 
+* Spring boot로 구축된 Microservice(REST API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial2
+* Node.JS로 구축된 Microservice(REST API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial2
 
+위 REST API Server로 Microservice를 구축하고 싶다면 링크를 참고하면 된다.
 
-## Spring Cloud Eureka Server ##
+## Spring Cloud Neflix Eureka - Server ##
 
+Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 설치하여 Spring Boot 개발 환경을 생성해도 되고, Maven Project를 생성해도 되고, FTP로 코딩해도 무방하다. 자신의 입맛에 맛는 방법을 선택하여 구축하면 된다.
 
+Eureka Server를 구성하는 방법은 
 > **Development Environment**
 > - Cent OS 7.4
-> - Jdk 1.8 
-> - Maven wrapper-Dmaven=3.3.3
+> - Jdk 1.8.0_171
+> - Maven 3.5.3
 
 
-
-
-**1. Set Maven Project Folder**
-
->a. Project Folder 생성 
->
->
->b. Project Folder 하위에 Maven Project를 생성
-> -     $mkdir -p src/main/java/hello
->
->
->
-
+* Spring Cloud Eureka => https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server
 
 **2. Pom.xml**
 
->a. pom.xml 생성
->
-> -     $vi pom.xl (원하는 Editor 사용)
->
+ 구글링을 하다보면 Spring Cloud Netflix의 여러 component에 대한 dependency를 찾을 수 있다. 그러나 전부 제 각각이고, Spring boot나 Spring Cloud Version에 따라 dependency를 찾지 못할 수도 있다. Maven Repository에서 사용가능한 version을 찾아서 사용해도 되긴 하나, 어쟀든 Version은 맞춰놓고 가는게 편할것이다..
+
+ 예를들어 Eureka server dependency 설정시 어떤 자료에서는 spring-cloud-starter-eureka-server라는 dependency를 사용하고 다른 자료에서는 spring-cloud-starter-netflix-eureka-server를 사용할 것이다.
+
+이 둘에 대한 차이는 없으나, spring-cloud-starter-netflix~ 를 사용하기를 권장한다.
+
+이에 대한 명세는 Spring Cloud Edgware Release Notes
+ => https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes
+ 
+ 여기서 확인하면 된다.
+
+그리고 우리가 Eureka Server 구축에 사용할 버전은 다음과 같다.
+
+1. spring-boot-starter-parent - 2.0.1.RELEASE
+2. spring-cloud-dependencies -> Finchley.M9 (https://spring.io/blog/2018/03/23/spring-cloud-finchley-m9-has-been-released)
+3. java - 1.8
+4. dockerfile-maven-plugin -> 1.3.6 
+(4번은 mvn dockerfile:build 명령어를 통해 docker container를 생성할 수 있는 plugin이다. 이걸 사용해도 되고 뒤에서 나올 다른 방법을 사용해도 된다.)
+
+
+ 어쨌든 Eureka Server를 구성하기 위해서 pom.xml에 다음을 추가하자
 
  **pom.xml**
 
