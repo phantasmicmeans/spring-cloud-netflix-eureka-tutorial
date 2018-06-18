@@ -48,7 +48,11 @@ Spring-Cloud-Netflix-Eureka
  
  여기서는 Eureka란 무엇인지, 어떻게 구성되어있는지, 그리고 Eureka의 개념에 대해 간단하게 설명했지만, Eureka의 활용도는 무궁무진하며 Service Discovery & Registry란 개념은 다음 장에서 설명하게 될 Netflix의 다른 component인 Hystrix, Ribbon, Zuul과 결합되어 질 때 활용도가 매우 높아진다. 그러나 이 부분을 지금 다루기엔 무리가 있으므로 차차 설명 하겠다.
  
-그럼 이제 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들고, 이를 Eureka Server에 등록해 보자.
+이제 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들고, 이를 Eureka Server에 등록해 볼 것이다.
+
+
+* Spring boot로 구축된 Microservice(API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial2
+* Node.JS로 구축된 Microservice(API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial2
 
 
 
