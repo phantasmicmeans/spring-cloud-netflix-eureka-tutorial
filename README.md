@@ -100,7 +100,9 @@ Eureka Server를 구성하는 방법은
  어쨌든 Eureka Server를 구성하기 위해서 pom.xml에 다음을 추가하자
 
  **pom.xml**
-
+ 
+```xml
+ 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -111,33 +113,36 @@ Eureka Server를 구성하는 방법은
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
                 <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
                 <java.version>1.8</java.version>
-                <spring-cloud.version>Finchley.M9</spring-cloud.version>
-        <docker.image.prefix>{your_docker_image_name}</docker.image.prefix>
+        <docker.image.prefix>phantasmicmeans</docker.image.prefix>
+       <!-- docker image 생성시 자신의 dockerhub와의 연동을 위해 dockerhub id를 입력한다 -->
     </properties>
- 
-    <dependencyManagement>
+
+        <dependencyManagement>
         <dependencies>
-            <dependency>
+                <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>Finchley.M9</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+                </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka-server</artifactId>
-            <version>1.1.5.RELEASE</version>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            </dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -146,33 +151,37 @@ Eureka Server를 구성하는 방법은
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.3.6</version>
                 <configuration>
                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <!-- 후에 mvn으로 docker image 생성시 {docker.image.prefix}/{project.artifactId}라는 이름을 가진 image가 생성될 것이다. -->
                 <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    <!--- mvn build시킨 jar파일을 docker image로 빌드 -->
                 </buildArgs>
+
             </configuration>
             </plugin>
+
         </plugins>
     </build>
 
     <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+                <repository>
+                        <id>spring-milestones</id>
+                        <name>Spring Milestones</name>
+                        <url>https://repo.spring.io/milestone</url>
+                        <snapshots>
+                                <enabled>false</enabled>
+                        </snapshots>
+                </repository>
+        </repositories>
 
-
-
+```
 
 
 **3. Maven Wrapper**
