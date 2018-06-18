@@ -1,39 +1,47 @@
 
-Spring-Cloud-Netflix-Eureka-Server 
+Spring-Cloud-Netflix-Eureka
 ===============================================
 
 *by S.M Lee*
 
 > **Note:**
->
-> - 전 세계에서 MSA를 가장 잘 운영하는 기업으로 평가받는 Netflix에서는 MSA구축을 편하게 할 많은 기술과 다양한 이슈에 대한 해결책을 제공한다. 특히 Netflix OSS(Open Source Software)를 공개하고 있다. 여기에는 MSA를 구성하는데 필수적으로 고려해야 할 다양한 Component들이 포함되어 있다. 
->
-> - 또한 Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 공통적으로 발생하는 대표적인 문제에 대한 솔루션을 제공한다. 
-> - 그리고 Spring Cloud에서는 위에서 설명한 Netflix OSS를 사용할 수 있게 Spring Cloud Netflix를 제공하고 있다.
->
-> - 결론적으로 MSA구축에 필요한 라이브러리 집합인 Netflix OSS를 Spring Cloud 프로젝트에서 사용할 수 있다. 
->
-> - 여기서는 Netflix OSS Component중 MSA구축에 필수적인 Eureka-Service Discovery & Registry, Hystrix-Circuit Breaker, Zuul-API Gateway, Ribbon-Client Side Loadbalancer 중 Eureka에 대해 알아본다.   
+> - 필수 선행 요소
+> - Monolithic Architecture에 대한 이해
+> - Microservice Architecture에 대한 이해
 
-## Netflix Eureka - Service Discovery & Registry##
+ 전 세계에서 Microservice Architecture를 가장 잘 운영하는 기업으로 평가받는 Netflix에서는 MSA구축을 편하게 할 많은 기술과 다양한 이슈에 대한 해결책을 제공한다. 특히 Netflix OSS(Open Source Software)를 공개하고 있다. 여기에는 MSA를 구성하는데 필수적으로 고려해야 할 다양한 Component들이 포함되어 있다. 
+
+또한 Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 공통적으로 발생하는 대표적인 문제에 대한 솔루션을 제공한다. 
+그리고 Spring Cloud에서는 위에서 설명한 Netflix OSS를 사용할 수 있게 Spring Cloud Netflix를 제공하고 있다.
+
+결론적으로 MSA구축에 필요한 라이브러리 집합인 Netflix OSS를 Spring Cloud 프로젝트에서 사용할 수 있다. 
+
+여기서는 Netflix OSS Component중 MSA구축에 필수적인 
+> - **Eureka** - Service Discovery & Registry, 
+> - **Hystrix**-Circuit Breaker, 
+> - **Zuul**-API Gateway, 
+> - **Ribbon**-Client Side Loadbalancer 
+
+중 Eureka에 대해 알아본다.   
+
+## Netflix Eureka - Service Discovery & Registry ##
  
- * Eureka란 말 그대로 Service Discovery & Registry 이다. Microservice Architecture에서는 기존의 Legacy한 Monolithic Architecture와는 달리 작은 Service 단위로 시스템이 구축 된다.
+ * Eureka란 말 그대로 Service Discovery & Registry 이다. Microservice Architecture에서는 기존의 Legacy한 Monolithic Architecture와는 달리 작은 Service 단위로 시스템을 구축 한다.
  
- * Service 단위로 시스템이 구축되다 보니 MSA에서는 이 Service들은 어떠한 Registry에 등록하고 이 Registry를 기반으로 다른 서비스를 찾는 Service Discovery & Registry라는 개념이 필요하다.
+ * Service 단위로 시스템이 구축되다 보니 MSA에서는 이 Service들은 어떠한 Registry에 등록하고, 이 Registry를 기반으로 다른 서비스를 찾는 Service Discovery & Registry라는 개념이 필요하다.
  
  * Netflix에서는 Eureka라는 Service Discovery & Registry를 제공하고 있고, 우리는 잘 파악해서 사용 하면 된다.
  
  * 그래서 Eureka는 어떻게 이루어져 있을까?
   
- * Eureka는 Eureka Server와 Eureka Client로 나뉘어 지는데, MSA에서의 모든 service들을 Eureka Client로 만들고, 이 Eureka Client들을 Eureka Server에 등록하게 된다. Eureka Client가 자신을 Eureka Server에 등록하면 hostname, ip address, port 등 meta data를 Eureka Server에 전송한다.
+ * Eureka는 크게 Eureka Server와 Eureka Client로 나뉘어 진다. MSA에서의 모든 service들을 Eureka Client로 만들고, 이 Eureka Client들은 자신을 Eureka Server(Registry)에 등록한다. Eureka Client가 자신을 Eureka Server에 등록하면 hostname, ip address, port 등 meta data를 Eureka Server에 전송한다.
  
-이 meta data는 Eureka Server(Registry)에 저장되는 것이다. 그리고 등록된 Eureka Client는 이 Registry에 저장된 다른 Eureka Client의 정보를 사용할 수 있다. 이 부분은 아마 계속 진행하다보면 이해가 될 것이다.
+이 meta data는 Eureka Server(Registry)에 저장되는 것이다. 그리고 등록된 Eureka Client는 이 Registry에 저장된 다른 Eureka Client의 정보를 사용할 수 있다. 이 부분은 아마 계속 진행하다보면 이해가 될 것이다. 
 
-그리고 Eureka Server는 각 Client로 부터 30초마다(default) heartbeat(Eureka Client가 살아있음을 알리는)를 수신하게 된다. Client로 부터 heartbeat가 오지 않으면 Eureka Server는 이 Client가 죽은 것으로 판단하고 Registry에서 제거하게 된다.
+그리고 Eureka Server는 각 Client로 부터 30초마다(default) heartbeat(Eureka Client가 살아있음을 알리는)를 수신하게 된다. Client로 부터 heartbeat가 오지 않으면 Eureka Server는 이 Client가 죽은 것으로 판단하고 Registry에서 제거하게 된다. 또한 Eureka Server는 모든 Client에게 Registry의 정보를 전달해주고, Client는 자신의 localStorage에 정보를 저장한다.
 
-
+ 정리해보자면 각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, Eureka Server는 각 Eureka Client에게 업데이트 된 정보를 전달해주는 체계를 가지는 것이다.
  
- * 각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, Eureka Server는 각 Eureka Client에게 업데이트 된 정보를 전달해주는 체계를 가진다. 
  이는 다수의 서비스가 지속적으로가능하게 하며, 각 Eureka Client는 Eureka Server로 부터 받은정보를 일정 시간동안 보유하고 있어 다른 서비스의 연결에 문제가 되지 않는다.
 
 
