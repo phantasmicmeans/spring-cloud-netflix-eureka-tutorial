@@ -32,17 +32,24 @@ Spring-Cloud-Netflix-Eureka
  
  * Netflix에서는 Eureka라는 Service Discovery & Registry를 제공하고 있고, 우리는 잘 파악해서 사용 하면 된다.
  
- * 그래서 Eureka는 어떻게 이루어져 있을까?
-  
- * Eureka는 크게 Eureka Server와 Eureka Client로 나뉘어 진다. MSA에서의 모든 service들을 Eureka Client로 만들고, 이 Eureka Client들은 자신을 Eureka Server(Registry)에 등록한다. Eureka Client가 자신을 Eureka Server에 등록하면 hostname, ip address, port 등 meta data를 Eureka Server에 전송한다.
+ **그래서 Eureka는 어떻게 이루어져 있을까?**
  
-이 meta data는 Eureka Server(Registry)에 저장되는 것이다. 그리고 등록된 Eureka Client는 이 Registry에 저장된 다른 Eureka Client의 정보를 사용할 수 있다. 이 부분은 아마 계속 진행하다보면 이해가 될 것이다. 
+  ![image](https://user-images.githubusercontent.com/20153890/41518351-e06d39ba-72fc-11e8-822f-ebe91db79b95.png)
 
-그리고 Eureka Server는 각 Client로 부터 30초마다(default) heartbeat(Eureka Client가 살아있음을 알리는)를 수신하게 된다. Client로 부터 heartbeat가 오지 않으면 Eureka Server는 이 Client가 죽은 것으로 판단하고 Registry에서 제거하게 된다. 또한 Eureka Server는 모든 Client에게 Registry의 정보를 전달해주고, Client는 자신의 localStorage에 정보를 저장한다.
+ Eureka는 크게 Eureka Server와 Eureka Client로 나뉘어 진다. MSA에서의 모든 service들을 Eureka Client로 만들고, 이 Eureka Client들은 자신을 Eureka Server(Registry)에 등록한다. Eureka Client가 자신을 Eureka Server에 등록하면 hostname, ip address, port 등 meta data를 Eureka Server에 전송한다.
+  
+ 이 meta data는 Eureka Server(Registry)에 저장되는 것이다. 그리고 등록된 Eureka Client는 이 Registry에 저장된 다른 Eureka Client의 정보를 사용할 수 있다. 이 부분은 아마 계속 진행하다보면 이해가 될 것이다. 
+
+ 그리고 Eureka Server는 각 Client로 부터 30초마다(default) heartbeat(Eureka Client가 살아있음을 알리는)를 수신하게 된다. Client로 부터 heartbeat가 오지 않으면 Eureka Server는 이 Client가 죽은 것으로 판단하고 Registry에서 제거하게 된다. 또한 Eureka Server는 모든 Client에게 Registry의 정보를 전달해주고, Client는 자신의 localStorage에 정보를 저장한다.
 
  정리해보자면 각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, Eureka Server는 각 Eureka Client에게 업데이트 된 정보를 전달해주는 체계를 가지는 것이다.
  
  이는 다수의 서비스가 지속적으로가능하게 하며, 각 Eureka Client는 Eureka Server로 부터 받은정보를 일정 시간동안 보유하고 있어 다른 서비스의 연결에 문제가 되지 않는다.
+ 
+ 여기서는 Eureka란 무엇인지, 어떻게 구성되어있는지, 그리고 Eureka의 개념에 대해 간단하게 설명했지만, Eureka의 활용도는 무궁무진하며 Service Discovery & Registry란 개념은 다음 장에서 설명하게 될 Netflix의 다른 component인 Hystrix, Ribbon, Zuul과 결합되어 질 때 활용도가 매우 높아진다. 그러나 이 부분을 지금 다루기엔 무리가 있으므로 차차 설명 하겠다.
+ 
+그럼 이제 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들고, 이를 Eureka Server에 등록해 보자.
+
 
 
 ## Spring Cloud Eureka Server ##
