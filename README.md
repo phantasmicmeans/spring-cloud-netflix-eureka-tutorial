@@ -54,7 +54,7 @@ Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 
  
 그러나 이 부분을 지금 다루기엔 무리가 있으므로 차차 설명 하겠다..
  
-이제 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들고, 이를 Eureka Server에 등록해 볼 것이다.
+이제 Eureka Server를 구축하고, 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들어 Eureka Server에 등록해 볼 것이다.
 
 ![image](https://user-images.githubusercontent.com/20153890/41519407-db9950f8-7302-11e8-80bf-1835466c374f.png)
 
@@ -345,7 +345,7 @@ b. docker CLI 사용시
 
 [sangmin@Mint-SM] ~/GitLab/GitLab/Eureka-server $ docker images
 REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
-phantasmicmeans/eureka_server   latest              4b79d6a1ed24        2 weeks ago         146MB
+phantasmicmeans/eureka-server   latest              4b79d6a1ed24        2 weeks ago         146MB
 openjdk                         8-jdk-alpine        224765a6bdbe        5 months ago        102MB
 
 ```
@@ -355,7 +355,7 @@ openjdk                         8-jdk-alpine        224765a6bdbe        5 months
 Docker image를 생성하였으므로 이 이미지를 실행 시켜보자.
 
 ```bash
-[sangmin@Mint-SM] ~ $ docker run -it -p 8761:8761 phantasmicmeans/eureka-rver:latest 
+[sangmin@Mint-SM] ~ $ docker run -it -p 8761:8761 phantasmicmeans/eureka-server:latest 
 
 ```
 
