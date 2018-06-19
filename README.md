@@ -84,8 +84,8 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
 
  후에 spring cloud netflix component들의 dependency 설정시 어떠한 자료에서는 spring-cloud-starter-~ (ex. spring-cloud-starter-eureka-server)라는 dependency를 사용하고 또 다른 자료에서는 spring-cloud-starter-netflix-~ (ex. spring-cloud-starter-netflix-eureka-server)를 사용할 것이다. 이 둘에 대한 차이는 없으나, spring-cloud-starter-netflix~ 를 사용하기를 권장한다.
 
-자세한 명세는 Spring Cloud Edgware Release Notes
- => https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes 에서 확인하면 된다.
+*자세한 명세는 Spring Cloud Edgware Release Notes
+ => https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes 에서 확인하면 된다.*
 
 
 ### version ###
@@ -93,7 +93,7 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
 우리가 Eureka Server 구축에 사용할 version은 다음과 같다.
 
 1. spring-boot-starter-parent - 2.0.1.RELEASE
-2. spring-cloud-dependencies -> Finchley.M9 (https://spring.io/blog/2018/03/23/spring-cloud-finchley-m9-has-been-released)
+2. spring-cloud-dependencies -> Finchley.M9 *(https://spring.io/blog/2018/03/23/spring-cloud-finchley-m9-has-been-released)*
 3. java - 1.8
 4. dockerfile-maven-plugin -> 1.3.6 
 (4번은 mvn dockerfile:build 명령어를 통해 docker container image를 생성할 수 있는 plugin이다. 이것을 사용해도 되고 뒤에서 나올 다른 방법을 사용해도 된다.)
@@ -231,7 +231,7 @@ eureka:
 
 ```
 Eureka Server를 standalone하게 활용하는 방법이다. 이 외에도 상세한 설명은 다음을 참고하자.
-(https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server-standalone-mode)
+*(https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server-standalone-mode)*
 
 ***bootstrap.yml***
 
@@ -267,15 +267,22 @@ public class EurekaServerApplication {
 Host OS에 설치된 maven을 이용해도 되고, spring boot application의 maven wrapper를 사용해도 된다
 (maven wrapper는 Linux, OSX, Windows, Solaris 등 서로 다른 OS에서도 동작한다. 따라서 추후에 여러 서비스들을 Jenkins에서 build 할 때 각 서비스들의 Maven version을 맞출 필요가 없다.)
 
-* A Quick Guide to Maven Wrapper => http://www.baeldung.com/maven-wrapper)
+*A Quick Guide to Maven Wrapper => http://www.baeldung.com/maven-wrapper)*
 
 **a. Host OS의 maven 이용**
-> -       $mvn package 
->
 
+```bash
+
+[sangmin@Mint-SM] ~/Eureka-server $ mvn package 
+
+```
 **b. maven wrapper 이용**
-> -       $./mvnw package 
->
+
+```bash
+
+[sangmin@Mint-SM] ~/Eureka-server $ ./mvnw package 
+
+```
 (**IDE를 통해 구축한 Spring boot application을 Linux Server에 올리고 진행시에는, maven wrapper를 실행 가능하게 만들어야 한다.
 chmod +x mvnw**)
 
@@ -286,10 +293,12 @@ chmod +x mvnw**)
 Eureka Server가 제대로 실행되는지 확인하여 보자.
 
 a. jar 파일 실행
->
-> -     $java -jar target/{your_application_name}.jar
->
 
+```bash
+
+[sangmin@Mint-SM] ~/Eureka-server $java -jar target/{your_application_name}.jar
+
+```
 ### 6. Check your Eureka Dashboard ###
 
 > http://localhost:8761
@@ -316,31 +325,39 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 
 a. dockerfile-maven-plugin 사용시
->
-> -     $./mvnw dockerfile:build
->
 
+```bash
+
+[sangmin@Mint-SM] ~/Eureka-server $ ./mvnw dockerfile:build
+
+```
 b. docker CLI 사용시
->
-> -     $docker build -t {your_dockerhub_id}:eureka-server:latest . 
->
+
+```bash
+
+[sangmin@Mint-SM] ~/Eureka-server $ docker build -t {your_docker_id}/eureka-server:latest .
+
+```
 
 이후 docker image가 잘 생성 되었음을 확인하자.
 
 ```bash
-sangmin@Mint-SM ~/GitLab/GitLab/Eureka-server $ docker images
+
+[sangmin@Mint-SM] ~/GitLab/GitLab/Eureka-server $ docker images
 REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
 phantasmicmeans/eureka_server   latest              4b79d6a1ed24        2 weeks ago         146MB
 openjdk                         8-jdk-alpine        224765a6bdbe        5 months ago        102MB
+
 ```
 
 ### 9. Run Docker Container ###
 
 Docker image를 생성하였으므로 이 이미지를 실행 시켜보자.
 
->
-> -     $docker run -it 8761:8761 {your_imagename}:latest  
->
+```bash
+[sangmin@Mint-SM] ~ $ docker run -it -p 8761:8761 phantasmicmeans/eureka-rver:latest 
+
+```
 
 문제없이 Eureka Server가 실행되면 다시 Eureka Dashboard를 확인하자.
 
