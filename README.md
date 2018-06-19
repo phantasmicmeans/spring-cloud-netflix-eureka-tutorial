@@ -11,6 +11,8 @@ Spring-Cloud-Netflix-Eureka
 > - Docker Container에 대한 이해(Container에 대한 이해, Dockerfile 작성법, Container Network 등)
 >
 *이 글은 위 선행 요소들에 대한 이해가 충분하다 가정하고 쓰여진 글입니다.*
+&nbsp;
+
 ![image](https://user-images.githubusercontent.com/20153890/41581639-17cf7a7a-73da-11e8-9352-4113c8a35532.png)
 
  전 세계에서 Microservice Architecture를 가장 잘 운영하는 기업으로 평가받는 Netflix에서는 MSA구축을 편하게 할 많은 기술과 다양한 이슈에 대한 해결책을 제공한다. 특히 Netflix OSS(Open Source Software)를 공개하고 있다. 여기에는 MSA를 구성하는데 필수적으로 고려해야 할 다양한 Component들이 포함되어 있다. 
@@ -19,6 +21,9 @@ Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 
 그리고 Spring Cloud에서는 위에서 설명한 Netflix OSS를 사용할 수 있도록 Spring Cloud Netflix를 제공하고 있다.
 
 결론적으로 MSA구축에 필요한 라이브러리 집합인 Netflix OSS를 Spring Cloud 프로젝트에서 사용할 수 있다. 
+
+&nbsp;
+&nbsp;
 
 **MSA와 관련 된 Netflix OSS Component**
 
@@ -29,6 +34,9 @@ Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 
 
 대표적인 4가지 Component중 여기서는 Eureka에 대해 알아보고 이를 docker image로 생성한다.   
 
+&nbsp;
+&nbsp;
+
 ## Netflix Eureka - Service Discovery & Registry ##
  
  * Eureka란 말 그대로 Service Discovery & Registry이다. Microservice Architecture에서는 기존의 Legacy한 Monolithic Architecture와는 달리 작은 Service 단위로 시스템을 구축 한다.
@@ -36,6 +44,9 @@ Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 
  * Service 단위로 시스템이 구축되다 보니 MSA에서는 이 Service들은 어떠한 Registry에 등록하고, 이 Registry를 기반으로 다른 서비스를 찾는 Service Discovery & Registry라는 개념이 필요하다.
  
  * Netflix에서는 Eureka라는 Service Discovery & Registry를 제공하고 있고, 우리는 잘 파악해서 사용하면 된다.
+ 
+ &nbsp;
+ &nbsp;
  
  **그래서 Eureka는 어떻게 이루어져 있을까?**
  
@@ -57,6 +68,8 @@ Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 
  
 이제 Eureka Server를 구축해보자
 
+&nbsp;
+&nbsp;
 
 ## Spring Cloud Neflix Eureka - Server ##
 
@@ -77,6 +90,9 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
 *자세한 명세는 Spring Cloud Edgware Release Notes
  => https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes 에서 확인하면 된다.*
 
+&nbsp;
+&nbsp;
+
 
 ### version ###
 
@@ -88,6 +104,8 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
 4. dockerfile-maven-plugin -> 1.3.6 
 (4번은 mvn dockerfile:build 명령어를 통해 docker container image를 생성할 수 있는 plugin이다. 이것을 사용해도 되고 뒤에서 나올 다른 방법을 사용해도 된다.)
 
+&nbsp;
+&nbsp;
 
 
 ### directory tree ###
@@ -113,6 +131,9 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
 
 
 이제  Eureka Server를 구축해보자.
+
+&nbsp;
+&nbsp;
 
 ## 1. Dependency ##
 
@@ -200,6 +221,9 @@ Eureka Server를 구축하기 위해 pom.xml에 다음을 추가하자
         </repositories>
 ```
 
+&nbsp;
+&nbsp;
+
 ## 2. configuration ##
 
 Spring Boot에서는 SnakeYAML을 포함하고 있기에 외부파일은 YAML로 작성하여 쉽게 로드 가능하다. 따라서 cofiguring을 야믈파일로 설정해도 되고, 기존 properties 파일을 사용해도 무방하다. 그리고 bootstrap.yml 파일은 spring cloud application에서 application.yml 파일보다 먼저 실행된다. 
@@ -239,6 +263,9 @@ spring:
 
 *추후에 Eureka Client가 Eureka에 등록될 때 eurek.client.hostname으로 등록된다. 그래서 때때로 ipAddress를 써야하는 경우도 생긴다. 이것은 Eureka Client 구축 단계에서 다시 설명할 것이니 알아두면 된다.*
 
+&nbsp;
+&nbsp;
+
 ## 3. EurekaServerApplication.java ##
 
 
@@ -256,6 +283,8 @@ public class EurekaServerApplication {
 
 @SpringBootApplication, @EnableEurekaServer annotation만 추가하면 된다.
 
+&nbsp;
+&nbsp;
 
 ## 4. Maven Packaging ##
 
@@ -271,6 +300,8 @@ Host OS에 설치된 maven을 이용해도 되고, spring boot application의 ma
 [sangmin@Mint-SM] ~/Eureka-server $ mvn package 
 
 ```
+&nbsp;
+
 **b. maven wrapper 이용**
 
 ```bash
@@ -283,6 +314,9 @@ chmod +x mvnw**)
 
 이 과정이 잘 마무리 되었다면 ProjectFolder의 target directory 하위에 {your_application_name}.jar 파일이 생성되었을 것이다.
 
+&nbsp;
+&nbsp;
+
 ## 5. Execute Spring Boot Application ##
 
 Eureka Server가 제대로 실행되는지 확인하여 보자.
@@ -294,11 +328,18 @@ Eureka Server가 제대로 실행되는지 확인하여 보자.
 [sangmin@Mint-SM] ~/Eureka-server $java -jar target/{your_application_name}.jar
 
 ```
+
+&nbsp;
+&nbsp;
+
 ## 6. Check your Eureka Dashboard ##
 
 > http://localhost:8761
 
 ![eureka](https://user-images.githubusercontent.com/20153890/39235281-755c1428-48b0-11e8-807a-c33bb67f7fd1.PNG)
+
+&nbsp;
+&nbsp;
 
 
 ## 7. Dockerizing ##
@@ -326,6 +367,8 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 [sangmin@Mint-SM] ~/Eureka-server $ ./mvnw dockerfile:build
 
 ```
+&nbsp;
+
 **b. docker CLI 사용시**
 
 ```bash
@@ -344,6 +387,9 @@ phantasmicmeans/eureka-server   latest              4b79d6a1ed24        2 weeks 
 openjdk                         8-jdk-alpine        224765a6bdbe        5 months ago        102MB
 
 ```
+
+&nbsp;
+&nbsp;
 
 ## 8. Run Docker Container ##
 
