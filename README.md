@@ -114,7 +114,7 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
 
 이제  Eureka Server를 구축해보자.
 
-**1. Pom.xml**
+## 1. Dependency ##
 
 Eureka Server를 구축하기 위해 pom.xml에 다음을 추가하자
 
@@ -200,7 +200,7 @@ Eureka Server를 구축하기 위해 pom.xml에 다음을 추가하자
         </repositories>
 ```
 
-### 2. configuration ###
+## 2. configuration ##
 
 Spring Boot에서는 SnakeYAML을 포함하고 있기에 외부파일은 YAML로 작성하여 쉽게 로드 가능하다. 따라서 cofiguring을 야믈파일로 설정해도 되고, 기존 properties 파일을 사용해도 무방하다. 그리고 bootstrap.yml 파일은 spring cloud application에서 application.yml 파일보다 먼저 실행된다. 
 따라서 상황에 맞게 사용하면 된다. 이제 아래처럼 각 yml파일을 세팅하자.
@@ -233,8 +233,13 @@ spring:
 
 위처럼 application 이름을 지정한다. 추후에 Eureka Client가 Eureka Server에 자신을 등록할 때 application.name으로 등록된다.
 
+**참고**
 
-### 3. EurekaServerApplication.java ###
+*야믈파일 사용시 한가지 주의할 점은 "TAB" 이다.. indent가 제대로 들어가 있지 않으면 적용되지 않는경우도 있다. indent 덕분에 꽤 오랜시간 삽질한 경험이 있다..*
+
+*추후에 Eureka Client가 Eureka에 등록될 때 eurek.client.hostname으로 등록된다. 그래서 때때로 ipAddress를 써야하는 경우도 생긴다. 이것은 Eureka Client 구축 단계에서 다시 설명할 것이니 알아두면 된다.*
+
+## 3. EurekaServerApplication.java ##
 
 
 ***EurekaServerApplication.java***
@@ -252,7 +257,7 @@ public class EurekaServerApplication {
 @SpringBootApplication, @EnableEurekaServer annotation만 추가하면 된다.
 
 
-### 4. Maven Packaging ###
+## 4. Maven Packaging ##
 
 Host OS에 설치된 maven을 이용해도 되고, spring boot application의 maven wrapper를 사용해도 된다
 (maven wrapper는 Linux, OSX, Windows, Solaris 등 서로 다른 OS에서도 동작한다. 따라서 추후에 여러 서비스들을 Jenkins에서 build 할 때 각 서비스들의 Maven version을 맞출 필요가 없다.)
@@ -278,7 +283,7 @@ chmod +x mvnw**)
 
 이 과정이 잘 마무리 되었다면 ProjectFolder의 target directory 하위에 {your_application_name}.jar 파일이 생성되었을 것이다.
 
-### 5. Execute Spring Boot Application ###
+## 5. Execute Spring Boot Application ##
 
 Eureka Server가 제대로 실행되는지 확인하여 보자.
 
@@ -289,14 +294,14 @@ Eureka Server가 제대로 실행되는지 확인하여 보자.
 [sangmin@Mint-SM] ~/Eureka-server $java -jar target/{your_application_name}.jar
 
 ```
-### 6. Check your Eureka Dashboard ###
+## 6. Check your Eureka Dashboard ##
 
 > http://localhost:8761
 
 ![eureka](https://user-images.githubusercontent.com/20153890/39235281-755c1428-48b0-11e8-807a-c33bb67f7fd1.PNG)
 
 
-### 7. Dockerizing ###
+## 7. Dockerizing ##
 
 구축한 Eureka Server(Spring boot application) docker image화 하자. 앞서 설명했듯이 dockerfile-maven-plugin으로 dockerfile을 build 해도 되고, docker build Command를 통해 image를 생성해도 된다. 이에 앞서 먼저 Dockerfile을 작성한다. 
 
@@ -340,9 +345,9 @@ openjdk                         8-jdk-alpine        224765a6bdbe        5 months
 
 ```
 
-### 9. Run Docker Container ###
+## 8. Run Docker Container ##
 
-Docker image를 생성하였으므로 이 이미지를 실행 시켜보자.
+Docker image를 생성하였으므로 이미지를 실행 시켜보자.
 
 ```bash
 [sangmin@Mint-SM] ~ $ docker run -it -p 8761:8761 phantasmicmeans/eureka-server:latest 
