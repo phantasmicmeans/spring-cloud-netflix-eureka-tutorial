@@ -11,6 +11,7 @@ Spring-Cloud-Netflix-Eureka
 > - Docker Container에 대한 이해(Container에 대한 이해, Dockerfile 작성법, Container Network 등)
 >
 *이 글은 위 선행 요소들에 대한 이해가 충분하다 가정하고 쓰여진 글입니다.*
+![image](https://user-images.githubusercontent.com/20153890/41581639-17cf7a7a-73da-11e8-9352-4113c8a35532.png)
 
  전 세계에서 Microservice Architecture를 가장 잘 운영하는 기업으로 평가받는 Netflix에서는 MSA구축을 편하게 할 많은 기술과 다양한 이슈에 대한 해결책을 제공한다. 특히 Netflix OSS(Open Source Software)를 공개하고 있다. 여기에는 MSA를 구성하는데 필수적으로 고려해야 할 다양한 Component들이 포함되어 있다. 
 
