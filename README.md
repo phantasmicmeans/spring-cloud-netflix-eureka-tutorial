@@ -55,19 +55,8 @@ Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 
  
 그러나 이 부분을 지금 다루기엔 무리가 있으므로 차차 설명 하겠다..
  
-이제 Eureka Server를 구축하고, 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들어 Eureka Server에 등록해 볼 것이다.
+이제 Eureka Server를 구축해보자
 
-![image](https://user-images.githubusercontent.com/20153890/41519407-db9950f8-7302-11e8-80bf-1835466c374f.png)
-
-각 Service는 위 사진 처럼 Story Service, Notice Service, BBS(Bulletin Board System) Service로 이루어 질 것이고, 
-Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축한다.
-
-* Spring boot로 구축된 Microservice(REST API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial2
-* Node.JS로 구축된 Microservice(REST API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial2
-
-위 REST API Server로 Microservice를 구축하고 싶다면 링크를 참고하면 된다.
-
-하지만 그 전에 Eureka Server 구축부터 하고 넘어가자. 
 
 ## Spring Cloud Neflix Eureka - Server ##
 
@@ -362,8 +351,15 @@ Docker image를 생성하였으므로 이 이미지를 실행 시켜보자.
 
 문제없이 Eureka Server가 실행되면 다시 Eureka Dashboard를 확인하자.
 
-지금까지 Eureka Server에 대한 간단한 이해와, 구축, Docker image화 까지 진행해 보았다. 다음장에선 각 Service들을 Eureka Client로 만들어 Eureka Server에 등록하고, Client들의 정보를 이용하는 방법까지 진행해 보겠다.
+지금까지 Eureka Server에 대한 간단한 이해와, 구축, Docker image화 까지 진행해 보았다. 다음장에선 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들어 Eureka Server에 등록해 볼 것이다.
 
+![image](https://user-images.githubusercontent.com/20153890/41519407-db9950f8-7302-11e8-80bf-1835466c374f.png)
+
+각 Service는 위 사진 처럼 Story Service, Notice Service, BBS(Bulletin Board System) Service로 이루어 질 것이고, 
+Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축한다.
+
+* Spring boot Microservice(REST API Server) => https://github.com/phantasmicmeans/MSA-SpringCloud-Service-example
+* Node.JS Microservice(REST API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial1
 
 ## References ##
 
