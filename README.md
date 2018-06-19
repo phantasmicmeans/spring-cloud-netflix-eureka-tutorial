@@ -24,7 +24,7 @@ Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 
 > - **Zuul**-API Gateway
 > - **Ribbon**-Client Side Loadbalancer 
 
-대표적인 4가지 Component중 여기서는 Eureka에 대해 알아본다.   
+대표적인 4가지 Component중 여기서는 Eureka에 대해 알아보고 이를 docker image로 생성한다.   
 
 ## Netflix Eureka - Service Discovery & Registry ##
  
@@ -66,47 +66,50 @@ Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축
 
 ## Spring Cloud Neflix Eureka - Server ##
 
-> **Development Environment**
-> - Cent OS 7.4
+> **Development and Testing Environment**
+> - Cent OS 7.4, Linux Mint 18.3 Sylvia
 > - Jdk 1.8.0_171
-> - Maven 3.5.3
+> - apache-maven 3.5.2
 
-Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 설치하여 Spring Boot 개발 환경을 세팅해도 되고, Maven Project를 생성해도 되며 자신의 입맛에 맛는 방법을 선택하여 구축하면 된다.
+Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 설치하여 Spring Boot 개발 환경을 세팅해도 되고, Maven Project 혹은 Gradle project를 생성해도 무방하며 자신의 입맛에 맛는 방법을 선택하여 구축하면 된다.
 
-* Spring Cloud NetflEureka => https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server
+(Building an Application with Spring Boot => https://spring.io/guides/gs/spring-boot/)
+(Spring Boot with Docker => https://spring.io/guides/gs/spring-boot-docker/)
 
-**2. Pom.xml**
+ 구글링을 하다보면 Spring Cloud Netflix의 여러 component에 대한 dependency를 찾을 수 있다. 그러나 전부 제 각각이고, spring boot나 spring cloud dependencies version에 따라 dependency를 찾지 못할 수도 있다. Maven Repository에서 사용가능한 version을 찾아서 사용해도 되긴 하나, spring-boot-starter-parent를 상속받아 사용하면 spring boot의 dependency 관리 지원을 받을 수 있다.
 
- 구글링을 하다보면 Spring Cloud Netflix의 여러 component에 대한 dependency를 찾을 수 있다. 그러나 전부 제 각각이고, Spring boot나 Spring Cloud Version에 따라 dependency를 찾지 못할 수도 있다. Maven Repository에서 사용가능한 version을 찾아서 사용해도 되긴 하나, 어쟀든 Version은 맞춰놓고 가는게 편할것이다..
+ 후에 spring cloud netflix component들의 dependency 설정시 어떠한 자료에서는 spring-cloud-starter-~ (ex. spring-cloud-starter-eureka-server)라는 dependency를 사용하고 또 다른 자료에서는 spring-cloud-starter-netflix-~ (ex. spring-cloud-starter-netflix-eureka-server)를 사용할 것이다. 이 둘에 대한 차이는 없으나, spring-cloud-starter-netflix~ 를 사용하기를 권장한다.
 
- 예를들어 Eureka server dependency 설정시 어떤 자료에서는 spring-cloud-starter-eureka-server라는 dependency를 사용하고 다른 자료에서는 spring-cloud-starter-netflix-eureka-server를 사용할 것이다.
+자세한 명세는 Spring Cloud Edgware Release Notes
+ => https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes 에서 확인하면 된다.
 
-이 둘에 대한 차이는 없으나, spring-cloud-starter-netflix~ 를 사용하기를 권장한다.
+**version**
 
-이에 대한 명세는 Spring Cloud Edgware Release Notes
- => https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes
- 
- 여기서 확인하면 된다.
-
-그리고 우리가 Eureka Server 구축에 사용할 버전은 다음과 같다.
+우리가 Eureka Server 구축에 사용할 version은 다음과 같다.
 
 1. spring-boot-starter-parent - 2.0.1.RELEASE
 2. spring-cloud-dependencies -> Finchley.M9 (https://spring.io/blog/2018/03/23/spring-cloud-finchley-m9-has-been-released)
 3. java - 1.8
 4. dockerfile-maven-plugin -> 1.3.6 
-(4번은 mvn dockerfile:build 명령어를 통해 docker container를 생성할 수 있는 plugin이다. 이걸 사용해도 되고 뒤에서 나올 다른 방법을 사용해도 된다.)
+(4번은 mvn dockerfile:build 명령어를 통해 docker container image를 생성할 수 있는 plugin이다. 이것을 사용해도 되고 뒤에서 나올 다른 방법을 사용해도 된다.)
+
+* Spring Cloud Netflix Eureka => https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server
+* Spring Cloud Samples => https://github.com/spring-cloud-samples/eureka
+
 
 
  어쨌든 Eureka Server를 구성하기 위해서 pom.xml에 다음을 추가하자
 
+**1. Pom.xml**
+
  **pom.xml**
  
 ```xml
- 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.0.1.RELEASE</version>
+        <!-- spring-boot-starter-parent 2.0.1.RELEASE -->
     </parent>
 
     <properties>
@@ -114,15 +117,15 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
                 <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
                 <java.version>1.8</java.version>
         <docker.image.prefix>phantasmicmeans</docker.image.prefix>
-       <!-- docker image 생성시 자신의 dockerhub와의 연동을 위해 dockerhub id를 입력한다 -->
+        <!-- docker image 생성시 dockerhub에 image를 push 하기 위해 자신의 dockerhub id를 입력한다 -->
     </properties>
 
-        <dependencyManagement>
+    <dependencyManagement>
         <dependencies>
                 <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Finchley.M9</version>
+                <version>Finchley.M9</version> <!--spring-cloud-dependencies version -->
                 <type>pom</type>
                 <scope>import</scope>
                 </dependency>
@@ -141,6 +144,7 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
         <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
+                <!-- Add Unit Tests -->
                 <scope>test</scope>
         </dependency>
     </dependencies>
@@ -163,10 +167,8 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     <!--- mvn build시킨 jar파일을 docker image로 빌드 -->
                 </buildArgs>
-
-            </configuration>
+                </configuration>
             </plugin>
-
         </plugins>
     </build>
 
@@ -180,71 +182,81 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
                         </snapshots>
                 </repository>
         </repositories>
-
 ```
 
-      
-**4. EurekaServerApplication.java**
+**2. configuration**
 
->a. src/main/java/hello에 EurekaServerApplication.java 파일 생성
->
+Spring Boot에서는 SnakeYAML을 포함하고 있기에 외부파일은 YAML로 작성하여 쉽게 로드 가능하다. 따라서 cofiguring을 야믈파일로 설정해도 되고, 기존 properties 파일을 사용해도 무방하다. 그리고 bootstrap.yml 파일은 spring cloud application에서 application.yml 파일보다 먼저 실행된다. 
+따라서 상황에 맞게 사용하면 된다.
 
+***application.yml***
 
+```yml
+server:
+    port: 8761
 
-   **EurekaServerApplication.java**
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    server:
+        waitTimeInMsWhenSyncEmpty: 0
+        ## Set this only for this sample service without which starting the instance will by default wait for the default of 5 mins
 
-        @SpringBootApplication
-        @EnableEurekaServer
-        public class EurekaServerApplication {
-            public static void main(String[] args) {
-                SpringApplication.run(EurekaServerApplication.class, args);
-            }
-        }
-        
+```
+Eureka Server를 standalone하게 활용하는 방법이다. 
+이 외에도 상세한 설명은 다음을 참고하자.
+(https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server-standalone-mode)
 
+***bootstrap.yml***
 
+```yml
+spring:
+    application:
+        name: eureka-server
+```
 
-**5. Application.yml**
-
->a. application.yml 파일 생성
->
->
-> - **Tip**
-> - Spring Boot에서는 SnakeYAML을 포함하고 있기에 외부파일은 YAML로 작성하여 쉽게 로드 가능
-
-
-> -     $vi src/main/resources/application.yml
-
-
-
-**application.yml**
-
-         spring:
-             application:
-                 name: eureka-server
-         server:
-             port: 8761
-
-         eureka:
-             client:
-                 registerWithEureka: false
-                 fetchRegistry: false
+위처럼 application 이름을 지정한다. 추후에 Eureka Client가 Eureka Server에 자신을 등록할 때 application.name으로 등록된다.
 
 
+**3. EurekaServerApplication.java**
 
-**6. Maven Package**
 
->
->a. maven wrapper build
->
-> -     $cd {YourProjectFolder}
-> -     $./mvnw package
->
->
+  **EurekaServerApplication.java**
+
+```java
+@SpringBootApplication
+@EnableEurekaServer
+public class EurekaServerApplication {
+     public static void main(String[] args) {
+           SpringApplication.run(EurekaServerApplication.class, args);
+     }
+}
+``` 
+
+@SpringBootApplication, @EnableEurekaServer annotation만 추가하면 된다.
+
+
+**4. Maven Packaging**
+
+Host OS에 설치된 maven을 이용해도 되고, spring boot application의 maven wrapper를 사용해도 된다
+(maven wrapper는 Linux, OSX, Windows, Solaris 등 서로 다른 OS에서도 동작함
+참고 => http://www.baeldung.com/maven-wrapper)
+
+a. Host OS의 maven 이용
+
+$mvn package
+
+b. maven wrapper 이용
+
+$./mvnw package 
+
+이 과정이 잘 마무리 되었다면 ProjectFolder의 target directory 하위에 {your_application_name}.jar 파일이 생성되었을 것이다.
 
 
 **7. Execute jar**
 
+Eureka Server가 제대로 실행되는지 확인하여 보자.
 >
 >a. jar 파일 실행
 >
