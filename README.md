@@ -73,8 +73,8 @@ Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축
 
 Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 설치하여 Spring Boot 개발 환경을 세팅해도 되고, Maven Project 혹은 Gradle project를 생성해도 무방하며 자신의 입맛에 맛는 방법을 선택하여 구축하면 된다.
 
-(Building an Application with Spring Boot => https://spring.io/guides/gs/spring-boot/)
-(Spring Boot with Docker => https://spring.io/guides/gs/spring-boot-docker/)
+* Building an Application with Spring Boot => https://spring.io/guides/gs/spring-boot/
+* Spring Boot with Docker => https://spring.io/guides/gs/spring-boot-docker/
 
  구글링을 하다보면 Spring Cloud Netflix의 여러 component에 대한 dependency를 찾을 수 있다. 그러나 전부 제 각각이고, spring boot나 spring cloud dependencies version에 따라 dependency를 찾지 못할 수도 있다. Maven Repository에서 사용가능한 version을 찾아서 사용해도 되긴 하나, spring-boot-starter-parent를 상속받아 사용하면 spring boot의 dependency 관리 지원을 받을 수 있다.
 
@@ -204,8 +204,7 @@ eureka:
         ## Set this only for this sample service without which starting the instance will by default wait for the default of 5 mins
 
 ```
-Eureka Server를 standalone하게 활용하는 방법이다. 
-이 외에도 상세한 설명은 다음을 참고하자.
+Eureka Server를 standalone하게 활용하는 방법이다. 이 외에도 상세한 설명은 다음을 참고하자.
 (https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server-standalone-mode)
 
 ***bootstrap.yml***
@@ -222,7 +221,7 @@ spring:
 **3. EurekaServerApplication.java**
 
 
-  **EurekaServerApplication.java**
+***EurekaServerApplication.java***
 
 ```java
 @SpringBootApplication
@@ -240,8 +239,9 @@ public class EurekaServerApplication {
 **4. Maven Packaging**
 
 Host OS에 설치된 maven을 이용해도 되고, spring boot application의 maven wrapper를 사용해도 된다
-(maven wrapper는 Linux, OSX, Windows, Solaris 등 서로 다른 OS에서도 동작함
-참고 => http://www.baeldung.com/maven-wrapper)
+(maven wrapper는 Linux, OSX, Windows, Solaris 등 서로 다른 OS에서도 동작한다. 따라서 추후에 여러 서비스들을 Jenkins에서 build 할 때 각 서비스들의 Maven version을 맞출 필요가 없다.)
+
+* A Quick Guide to Maven Wrapper => http://www.baeldung.com/maven-wrapper)
 
 a. Host OS의 maven 이용
 
@@ -252,7 +252,6 @@ b. maven wrapper 이용
 $./mvnw package 
 
 이 과정이 잘 마무리 되었다면 ProjectFolder의 target directory 하위에 {your_application_name}.jar 파일이 생성되었을 것이다.
-
 
 **7. Execute jar**
 
