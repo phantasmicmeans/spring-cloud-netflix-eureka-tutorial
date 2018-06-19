@@ -381,7 +381,7 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 
 ```bash
 
-[sangmin@Mint-SM] ~/GitLab/GitLab/Eureka-server $ docker images
+[sangmin@Mint-SM] ~/Eureka-server $ docker images
 REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
 phantasmicmeans/eureka-server   latest              4b79d6a1ed24        2 weeks ago         146MB
 openjdk                         8-jdk-alpine        224765a6bdbe        5 months ago        102MB
