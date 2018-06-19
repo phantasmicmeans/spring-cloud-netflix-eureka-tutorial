@@ -8,7 +8,9 @@ Spring-Cloud-Netflix-Eureka
 > - 필수 선행 요소
 > - Monolithic Architecture에 대한 이해
 > - Microservice Architecture에 대한 이해
+> - Docker Container에 대한 이해(Container에 대한 이해, Dockerfile 작성법, Container Network 등)
 >
+*이 글은 위 선행 요소들에 대한 이해가 충분하다 가정하고 쓰여진 글입니다.*
 
  전 세계에서 Microservice Architecture를 가장 잘 운영하는 기업으로 평가받는 Netflix에서는 MSA구축을 편하게 할 많은 기술과 다양한 이슈에 대한 해결책을 제공한다. 특히 Netflix OSS(Open Source Software)를 공개하고 있다. 여기에는 MSA를 구성하는데 필수적으로 고려해야 할 다양한 Component들이 포함되어 있다. 
 
@@ -83,7 +85,8 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
 자세한 명세는 Spring Cloud Edgware Release Notes
  => https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes 에서 확인하면 된다.
 
-**version**
+
+### version ###
 
 우리가 Eureka Server 구축에 사용할 version은 다음과 같다.
 
@@ -93,14 +96,35 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
 4. dockerfile-maven-plugin -> 1.3.6 
 (4번은 mvn dockerfile:build 명령어를 통해 docker container image를 생성할 수 있는 plugin이다. 이것을 사용해도 되고 뒤에서 나올 다른 방법을 사용해도 된다.)
 
-* Spring Cloud Netflix Eureka => https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server
-* Spring Cloud Samples => https://github.com/spring-cloud-samples/eureka
 
 
+### directory tree ###
 
- 어쨌든 Eureka Server를 구성하기 위해서 pom.xml에 다음을 추가하자
+우리가 진행하게 될 디렉토리 구조를 살펴보면 이러한 형태를 취할 것이다. 나아가면서 참고하면 된다.
+
+    .
+    ├── Dockerfile
+    ├── mvnw
+    ├── mvnw.cmd
+    ├── pom.xml
+    ├── src/main/java/com/example/demo
+    |        |                      └── EurekaServerApplication.java
+    |        |
+    │        └── resources
+    │           ├── application.yml
+    │           └── bootstrap.yml
+    └── target
+          ├── classes
+          ├── eureka-server-0.1.0.jar
+          ├── eureka-server-0.1.0.jar.original
+          ├── generated-sources ...
+
+
+이제  Eureka Server를 구축해보자.
 
 **1. Pom.xml**
+
+Eureka Server를 구축하기 위해 pom.xml에 다음을 추가하자
 
  **pom.xml**
  
@@ -184,10 +208,10 @@ Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 �
         </repositories>
 ```
 
-**2. configuration**
+### 2. configuration ###
 
 Spring Boot에서는 SnakeYAML을 포함하고 있기에 외부파일은 YAML로 작성하여 쉽게 로드 가능하다. 따라서 cofiguring을 야믈파일로 설정해도 되고, 기존 properties 파일을 사용해도 무방하다. 그리고 bootstrap.yml 파일은 spring cloud application에서 application.yml 파일보다 먼저 실행된다. 
-따라서 상황에 맞게 사용하면 된다.
+따라서 상황에 맞게 사용하면 된다. 이제 아래처럼 각 yml파일을 세팅하자.
 
 ***application.yml***
 
@@ -218,7 +242,7 @@ spring:
 위처럼 application 이름을 지정한다. 추후에 Eureka Client가 Eureka Server에 자신을 등록할 때 application.name으로 등록된다.
 
 
-**3. EurekaServerApplication.java**
+### 3. EurekaServerApplication.java ###
 
 
 ***EurekaServerApplication.java***
@@ -236,51 +260,95 @@ public class EurekaServerApplication {
 @SpringBootApplication, @EnableEurekaServer annotation만 추가하면 된다.
 
 
-**4. Maven Packaging**
+### 4. Maven Packaging ###
 
 Host OS에 설치된 maven을 이용해도 되고, spring boot application의 maven wrapper를 사용해도 된다
 (maven wrapper는 Linux, OSX, Windows, Solaris 등 서로 다른 OS에서도 동작한다. 따라서 추후에 여러 서비스들을 Jenkins에서 build 할 때 각 서비스들의 Maven version을 맞출 필요가 없다.)
 
 * A Quick Guide to Maven Wrapper => http://www.baeldung.com/maven-wrapper)
 
-a. Host OS의 maven 이용
+**a. Host OS의 maven 이용**
+> -       $mvn package 
+>
 
-$mvn package
-
-b. maven wrapper 이용
-
-$./mvnw package 
+**b. maven wrapper 이용**
+> -       $./mvnw package 
+>
+(**IDE를 통해 구축한 Spring boot application을 Linux Server에 올리고 진행시에는, maven wrapper를 실행 가능하게 만들어야 한다.
+chmod +x mvnw**)
 
 이 과정이 잘 마무리 되었다면 ProjectFolder의 target directory 하위에 {your_application_name}.jar 파일이 생성되었을 것이다.
 
-**7. Execute jar**
+### 5. Execute Spring Boot Application ###
 
 Eureka Server가 제대로 실행되는지 확인하여 보자.
+
+a. jar 파일 실행
 >
->a. jar 파일 실행
->
-> -     $java -jar target/spring-boot-docker-sm1-0.1.0.jar
->
+> -     $java -jar target/{your_application_name}.jar
 >
 
-**8. Make Docker images**
->
-> -     $./mvnw dockerfile:build
-> -     $docker images
->
->
-
-**9. Run Docker Container**
->
-> -     $docker run -it 8761:8761 {your_container_id}
-> -     $docker ps 
->
->
-
-**10. Check your Eureka Dashboard**
+### 6. Check your Eureka Dashboard ###
 
 > http://localhost:8761
 
 ![eureka](https://user-images.githubusercontent.com/20153890/39235281-755c1428-48b0-11e8-807a-c33bb67f7fd1.PNG)
 
 
+### 7. Dockerizing ###
+
+구축한 Eureka Server(Spring boot application) docker image화 하자. 앞서 설명했듯이 dockerfile-maven-plugin으로 dockerfile을 build 해도 되고, docker build Command를 통해 image를 생성해도 된다. 이에 앞서 먼저 Dockerfile을 작성한다. 
+
+***Dockerfile***
+
+```Dockerfile
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+
+#ARG JAR_FILE
+#ADD ${JAR_FILE} app.jar 
+#dockerfile-maven-plugin으로 docker image를 생성하려면 아래 ADD ~를 주석처리하고, 위 2줄의 주석을 지우면 된다.
+ADD ./target/eureka-server-0.1.0.jar app.jar 
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+```
+
+
+a. dockerfile-maven-plugin 사용시
+>
+> -     $./mvnw dockerfile:build
+>
+
+b. docker CLI 사용시
+>
+> -     $docker build -t {your_dockerhub_id}:eureka-server:latest . 
+>
+
+이후 docker image가 잘 생성 되었음을 확인하자.
+
+```bash
+sangmin@Mint-SM ~/GitLab/GitLab/Eureka-server $ docker images
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+phantasmicmeans/eureka_server   latest              4b79d6a1ed24        2 weeks ago         146MB
+openjdk                         8-jdk-alpine        224765a6bdbe        5 months ago        102MB
+```
+
+### 9. Run Docker Container ###
+
+Docker image를 생성하였으므로 이 이미지를 실행 시켜보자.
+
+>
+> -     $docker run -it 8761:8761 {your_imagename}:latest  
+>
+
+문제없이 Eureka Server가 실행되면 다시 Eureka Dashboard를 확인하자.
+
+## References ##
+
+* Spring Cloud Netflix Eureka 
+=> https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server
+* Spring Cloud Samples => https://github.com/spring-cloud-samples/eureka
+* Spring Cloud dependencies Finchely.M9 => https://spring.io/blog/2018/03/23/spring-cloud-finchley-m9-has-been-released
+* Spring Cloud Netflix => https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html
+* Spring Cloud Samples => https://github.com/spring-cloud-samples/eureka
+* Spring Cloud Edgware Release Notes 
+=> https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes 에서 확인하면 된다.
