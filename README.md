@@ -351,6 +351,8 @@ Docker image를 생성하였으므로 이 이미지를 실행 시켜보자.
 
 문제없이 Eureka Server가 실행되면 다시 Eureka Dashboard를 확인하자.
 
+## Conclusion ##
+
 지금까지 Eureka Server에 대한 간단한 이해와, 구축, Docker image화 까지 진행해 보았다. 다음장에선 간단한 REST API Server(Spring boot Application, Node.JS)로 구축된 3가지 Microservice를 Eureka Client로 만들어 Eureka Server에 등록해 볼 것이다.
 
 ![image](https://user-images.githubusercontent.com/20153890/41519407-db9950f8-7302-11e8-80bf-1835466c374f.png)
@@ -370,4 +372,4 @@ Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축
 * Spring Cloud Netflix => https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html
 * Spring Cloud Samples => https://github.com/spring-cloud-samples/eureka
 * Spring Cloud Edgware Release Notes 
-=> https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes 에서 확인하면 된다.
+=> https://github.com/spring-projects/spring-cloud/wiki/Spring-Cloud-Edgware-Release-Notes 
