@@ -8,16 +8,16 @@ Spring-Cloud-Netflix-Eureka
 > - 필수 선행 요소
 > - Monolithic Architecture에 대한 이해
 > - Microservice Architecture에 대한 이해
-
+>
 
  전 세계에서 Microservice Architecture를 가장 잘 운영하는 기업으로 평가받는 Netflix에서는 MSA구축을 편하게 할 많은 기술과 다양한 이슈에 대한 해결책을 제공한다. 특히 Netflix OSS(Open Source Software)를 공개하고 있다. 여기에는 MSA를 구성하는데 필수적으로 고려해야 할 다양한 Component들이 포함되어 있다. 
 
-또한 Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 공통적으로 발생하는 대표적인 문제에 대한 솔루션을 제공한다. 
-그리고 Spring Cloud에서는 위에서 설명한 Netflix OSS를 사용할 수 있게 Spring Cloud Netflix를 제공하고 있다.
+Spring Cloud는 분산시스템(ex. Microservice Architecture)을 구축할 때 공통적으로 발생하는 대표적인 문제에 대한 솔루션을 제공한다. 
+그리고 Spring Cloud에서는 위에서 설명한 Netflix OSS를 사용할 수 있도록 Spring Cloud Netflix를 제공하고 있다.
 
 결론적으로 MSA구축에 필요한 라이브러리 집합인 Netflix OSS를 Spring Cloud 프로젝트에서 사용할 수 있다. 
 
-* MSA와 관련 된 Netflix OSS Component *
+**MSA와 관련 된 Netflix OSS Component**
 
 > - **Eureka** - Service Discovery & Registry 
 > - **Hystrix**-Circuit Breaker
@@ -28,7 +28,7 @@ Spring-Cloud-Netflix-Eureka
 
 ## Netflix Eureka - Service Discovery & Registry ##
  
- * Eureka란 말 그대로 Service Discovery & Registry 이다. Microservice Architecture에서는 기존의 Legacy한 Monolithic Architecture와는 달리 작은 Service 단위로 시스템을 구축 한다.
+ * Eureka란 말 그대로 Service Discovery & Registry이다. Microservice Architecture에서는 기존의 Legacy한 Monolithic Architecture와는 달리 작은 Service 단위로 시스템을 구축 한다.
  
  * Service 단위로 시스템이 구축되다 보니 MSA에서는 이 Service들은 어떠한 Registry에 등록하고, 이 Registry를 기반으로 다른 서비스를 찾는 Service Discovery & Registry라는 개념이 필요하다.
  
@@ -38,11 +38,11 @@ Spring-Cloud-Netflix-Eureka
  
   ![image](https://user-images.githubusercontent.com/20153890/41518351-e06d39ba-72fc-11e8-822f-ebe91db79b95.png)
 
- Eureka는 크게 Eureka Server와 Eureka Client로 나뉘어 진다. Microsericie Architecture 시스템에서의 모든 service들은 Eureka Client로 만들어지게 된다. 그리고 Eureka Client(각 service)들은 자신을 Eureka Server(Registry)에 등록한다. Eureka Client가 자신을 Eureka Server에 등록하게 되면 hostname, ip address, port 등 meta data를 Eureka Server(Registry)에 전송한다.
+ Eureka는 크게 Eureka Server와 Eureka Client로 나뉘어 진다. Microsericie Architecture 시스템에서의 모든 service들은 Eureka Client로 만들어지게 된다. 그리고 Eureka Client(각 service)들은 자신을 Eureka Server(Registry)에 등록한다. Eureka Client는 자신을 Eureka Server에 등록하고 hostname, ip address, port 등 자신의 meta data를 Eureka Server(Registry)에 전송한다.
   
  이 meta data는 Eureka Server(Registry)에 저장되는 것이다. 그리고 등록된 Eureka Client는 이 Registry에 저장된 다른 Eureka Client의 정보를 사용할 수 있다. 이 부분은 아마 계속 진행하다보면 이해가 될 것이다. 
 
- 그리고 Eureka Server는 각 Client로 부터 30초마다(default) heartbeat(Eureka Client가 살아있음을 알리는)를 수신하게 된다. Client로 부터 heartbeat가 오지 않으면 Eureka Server는 이 Client가 죽은 것으로 판단하고 Registry에서 제거하게 된다. 또한 Eureka Server는 모든 Client에게 Registry의 정보를 전달해주고, Client는 자신의 localStorage에 정보를 저장한다.
+ 그리고 Eureka Server는 각 Client로 부터 30초마다(default) heartbeat(Eureka Client가 살아있음을 알리는)를 수신하게 된다. Client로 부터 heartbeat가 오지 않으면 Eureka Server는 Client가 죽은 것으로 판단하고 Registry에서 제거하게 된다. 또한 Eureka Server는 모든 Client에게 Registry의 정보를 전달해주고, Client는 자신의 localStorage에 정보를 저장한다.
 
  정리해보자면 각 Eureka Client가 자신의 정보를 Eureka Server에 보내고, Eureka Server는 각 Eureka Client에게 업데이트 된 정보를 전달해주는 체계를 가지는 것이다.
  
@@ -66,16 +66,14 @@ Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축
 
 ## Spring Cloud Neflix Eureka - Server ##
 
-Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 설치하여 Spring Boot 개발 환경을 세팅해도 되고, Maven Project를 생성해도 되고, FTP로 코딩해도 무방하다. 자신의 입맛에 맛는 방법을 선택하여 구축하면 된다.
-
-Eureka Server를 구성하는 방법은 
 > **Development Environment**
 > - Cent OS 7.4
 > - Jdk 1.8.0_171
 > - Maven 3.5.3
 
+Eureka Server는 Spring Boot Application으로 구축된다. Eclipse에 STS를 설치하여 Spring Boot 개발 환경을 세팅해도 되고, Maven Project를 생성해도 되며 자신의 입맛에 맛는 방법을 선택하여 구축하면 된다.
 
-* Spring Cloud Eureka => https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server
+* Spring Cloud NetflEureka => https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#spring-cloud-eureka-server
 
 **2. Pom.xml**
 
@@ -185,16 +183,6 @@ Eureka Server를 구성하는 방법은
 
 ```
 
-
-**3. Maven Wrapper**
-
->
->a. maven wrapper 설정
->
-> -     $mvn -N io.takari:maven:wrapper -Dmaven=3.3.3
->  
->
->
       
 **4. EurekaServerApplication.java**
 
