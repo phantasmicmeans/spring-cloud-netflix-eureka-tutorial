@@ -293,7 +293,7 @@ chmod +x mvnw**)
 
 Eureka Server가 제대로 실행되는지 확인하여 보자.
 
-a. jar 파일 실행
+**jar 파일 실행**
 
 ```bash
 
@@ -325,14 +325,14 @@ ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 ```
 
 
-a. dockerfile-maven-plugin 사용시
+**a. dockerfile-maven-plugin 사용시**
 
 ```bash
 
 [sangmin@Mint-SM] ~/Eureka-server $ ./mvnw dockerfile:build
 
 ```
-b. docker CLI 사용시
+**b. docker CLI 사용시**
 
 ```bash
 
