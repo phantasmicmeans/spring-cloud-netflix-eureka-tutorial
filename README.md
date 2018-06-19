@@ -66,6 +66,8 @@ Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축
 
 위 REST API Server로 Microservice를 구축하고 싶다면 링크를 참고하면 된다.
 
+하지만 그 전에 Eureka Server 구축부터 하고 넘어가자. 
+
 ## Spring Cloud Neflix Eureka - Server ##
 
 > **Development and Testing Environment**
@@ -341,6 +343,9 @@ Docker image를 생성하였으므로 이 이미지를 실행 시켜보자.
 >
 
 문제없이 Eureka Server가 실행되면 다시 Eureka Dashboard를 확인하자.
+
+지금까지 Eureka Server에 대한 간단한 이해와, 구축, Docker image화 까지 진행해 보았다. 다음장에선 각 Service들을 Eureka Client로 만들어 Eureka Server에 등록하고, Client들의 정보를 이용하는 방법까지 진행해 보겠다.
+
 
 ## References ##
 
