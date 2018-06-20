@@ -1,0 +1,29 @@
+# Created on 2018-05-01T15:37:19.047
+java.io.IOException: Stream closed
+	at java.io.BufferedInputStream.getBufIfOpen(BufferedInputStream.java:170)
+	at java.io.BufferedInputStream.read1(BufferedInputStream.java:283)
+	at java.io.BufferedInputStream.read(BufferedInputStream.java:345)
+	at sun.nio.cs.StreamDecoder.readBytes(StreamDecoder.java:284)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:326)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:178)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.Reader.read(Reader.java:100)
+	at java.util.Scanner.readInput(Scanner.java:804)
+	at java.util.Scanner.findWithinHorizon(Scanner.java:1685)
+	at java.util.Scanner.hasNextLine(Scanner.java:1500)
+	at org.apache.maven.surefire.booter.PpidChecker$ProcessInfoConsumer.execute(PpidChecker.java:301)
+	at org.apache.maven.surefire.booter.PpidChecker.unix(PpidChecker.java:160)
+	at org.apache.maven.surefire.booter.PpidChecker.isProcessAlive(PpidChecker.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter$2.run(ForkedBooter.java:213)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+
+
+# Created on 2018-05-01T15:37:19.048
+System.exit() or native command error interrupted process checker.
+

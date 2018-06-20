@@ -1,0 +1,7 @@
+spring:
+    application:
+        name: eureka-server
+        ##cloud:
+        #config:
+        #uri: ${CONFIG_SERVER_URL:http://192.168.10.168:8888}
+        #    fail-fast: true
