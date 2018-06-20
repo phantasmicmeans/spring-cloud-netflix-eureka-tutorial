@@ -413,7 +413,7 @@ Docker image를 생성하였으므로 이미지를 실행 시켜보자.
 각 Service는 위 사진 처럼 Story Service, Notice Service, BBS(Bulletin Board System) Service로 이루어 질 것이고, 
 Story Service와 Notice Service는 Spring boot, BBS Service는 Node.JS로 구축한다.
 
-* Spring boot Microservice(REST API Server) => https://github.com/phantasmicmeans/MSA-SpringCloud-Service-example
+* Spring boot Microservice(REST API Server) => https://github.com/phantasmicmeans/Spring-Boot-Microservice-with-Spring-Cloud-Netflix
 * Node.JS Microservice(REST API Server) => https://github.com/phantasmicmeans/nodejs_API_tutorial1
 
 ## References ##
