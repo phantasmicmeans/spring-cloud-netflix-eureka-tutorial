@@ -359,7 +359,7 @@ ADD ./target/eureka-server-0.1.0.jar app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 ```
 
-Dockerfile 작성이 끝났다면 image를 buil하자
+Dockerfile 작성이 끝났다면 image를 build하자
 
 
 **a. dockerfile-maven-plugin 사용시**
