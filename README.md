@@ -1,4 +1,6 @@
 
+[![HitCount](http://hits.dwyl.io/phantasmicmeans/spring-cloud-netflix-eureka-tutorial.svg)](http://hits.dwyl.io/phantasmicmeans/spring-cloud-netflix-eureka-tutorial)
+
 Spring-Cloud-Netflix-Eureka
 ===============================================
 
